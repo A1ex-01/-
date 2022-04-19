@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkax_cms"]=self["webpackChunkax_cms"]||[]).push([[213],{1213:function(e,n,r){r.r(n),r.d(n,{default:function(){return o}});var u=r(6252);const s={class:"user"},t=(0,u._)("h2",null,"user",-1),a=[t];function c(e,n,r,t,c,f){return(0,u.wg)(),(0,u.iD)("div",s,a)}var f=(0,u.aZ)({name:"user",setup(){return{}}}),i=r(3744);const l=(0,i.Z)(f,[["render",c]]);var o=l}}]);
+//# sourceMappingURL=213.13afbd43.js.map
