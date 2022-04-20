@@ -2,30 +2,33 @@ import { ITable, ITableItem } from "@/base-ui/table"
 
 const formItems: ITableItem[] = [
   {
-    prop: "id",
-    label: "id",
-    minWidth: 90
-  },
-  {
     prop: "name",
-    label: "昵称",
+    label: "商品名称",
     minWidth: 120
   },
   {
-    prop: "realname",
-    label: "姓名",
-    minWidth: 120
+    prop: "oldPrice",
+    label: "原价格",
+    minWidth: 100,
+    slotName: "oldPrice"
   },
   {
-    prop: "enable",
-    label: "状态",
+    prop: "newPrice",
+    label: "现价格",
+    minWidth: 100,
+    slotName: "newPrice"
+  },
+  {
+    prop: "imgUrl",
+    label: "商品图片",
     minWidth: 120,
-    slotName: "enable"
+    slotName: "imgUrl"
   },
   {
-    prop: "cellphone",
-    label: "电话号码",
-    minWidth: 150
+    prop: "status",
+    label: "状态",
+    minWidth: 100,
+    slotName: "status"
   },
   {
     prop: "createAt",

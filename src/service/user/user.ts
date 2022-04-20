@@ -5,7 +5,7 @@ export function getUserList(data?: object) {
     url: "/users/list",
     data: {
       offset: 0,
-      size: 5,
+      size: 10,
       ...data
     }
   })

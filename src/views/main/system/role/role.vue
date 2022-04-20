@@ -10,7 +10,8 @@
         ><content-show
           :contentFormConfig="contentFormConfig"
           pageName="role"
-          ref="contentShow"
+          title="角色管理"
+          ref="contentShowRef"
         >
         </content-show
       ></suspense>
@@ -24,20 +25,15 @@ import PageSeatch from "@/components/page-search/src/PageSearch.vue"
 import { contentFormConfig } from "./config/content.config"
 import { searchFormConfig } from "./config/search.config"
 import ContentShow from "@/components/content-show/src/ContentShow.vue"
+import { usePageSearch } from "@/hooks/usePageSearch"
 export default defineComponent({
   name: "role",
   setup() {
-    const contentShow = ref<InstanceType<typeof ContentShow>>()
-    const searchBtn = async (val: any) => {
-      contentShow.value?.updateForm(val)
-    }
-    const resetBtn = () => {
-      console.log("resetd")
-    }
+    const [contentShowRef, searchBtn, resetBtn] = usePageSearch()
     return {
       contentFormConfig,
       searchFormConfig,
-      contentShow,
+      contentShowRef,
       searchBtn,
       resetBtn
     }

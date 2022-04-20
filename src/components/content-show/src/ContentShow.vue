@@ -3,34 +3,39 @@
     <AxTable v-bind="contentFormConfig" :formData="formData.list">
       <template #top>
         <div class="addUser">
-          <span style="font-weight: bold">{{
-            pageName === "user" ? "用户列表" : "角色列表"
-          }}</span>
+          <span class="title" v-if="title">{{ title }}</span>
           <el-button type="primary">新增用户</el-button>
         </div>
       </template>
-      <template #enable="slotScope">
-        <el-button
-          :type="slotScope.data ? 'primary' : 'danger'"
-          size="small"
-          plain
-          >{{ slotScope.data ? "启用" : "禁用" }}</el-button
-        >
+      <template #createAt="slotScope">
+        {{ utcToTime(slotScope.data) }}
+      </template>
+      <template #updateAt="slotScope">
+        {{ utcToTime(slotScope.data) }}
       </template>
       <template #edit>
         <el-button type="text" size="small">编辑</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
-      <template #bottom
+      <template v-if="showBottom" #bottom
         ><div class="bottom">
           <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currPage"
             background
             small
-            :page-size="5"
-            layout="prev, pager, next, jumper"
+            :page-size="10"
+            layout="prev, pager, next, jumper,total"
             :total="formData.totalCount"
           /></div
       ></template>
+      <template
+        #[item.prop]="slotScope"
+        v-for="item in otherProps"
+        :key="item.prop"
+      >
+        <slot :name="item.slotName" :data="slotScope.data"></slot>
+      </template>
     </AxTable>
   </div>
 </template>
@@ -39,6 +44,7 @@
 import { defineComponent, ref } from "vue"
 import { AxTable } from "@/base-ui/table/index"
 import { useFormDataShow } from "@/hooks/useFormDataShow"
+import { utcToTime } from "@/utils/formatTime"
 // import { stringMapFn } from "@/utils/stringMapFn"
 export default defineComponent({
   props: {
@@ -49,31 +55,56 @@ export default defineComponent({
     pageName: {
       type: String,
       required: true
+    },
+    title: {
+      type: String,
+      default: ""
+    },
+    showBottom: {
+      type: Boolean,
+      default: true
     }
   },
   async setup(props) {
+    // 搜集非默认的prop并生成插槽
+    const otherProps = props.contentFormConfig?.formItems.filter(
+      (item: any) => {
+        if (item?.slotName === "top") {
+          return false
+        }
+        if (item?.slotName === "createAt") {
+          return false
+        }
+        if (item?.slotName === "updateAt") {
+          return false
+        }
+        if (item?.slotName === "edit") {
+          return false
+        }
+        if (item?.slotName === "bottom") {
+          return false
+        }
+        return !!item?.slotName
+      }
+    )
     // 获取table数据
     const [formData, updateForm] = await useFormDataShow(props.pageName)
-    // if (props.pageName === "user") {
-    //   const { data } = await getUserList()
-    //   formData.value = data
-    //   // 更新table
-    //   updateForm = async (info: object) => {
-    //     const { data } = await getUserList(info)
-    //     formData.value = data
-    //   }
-    // } else if (props.pageName === "role") {
-    //   const { data } = await getRoleList()
-    //   formData.value = data
-    //   console.log("aaa")
-    //   // 更新table
-    //   updateForm = async (info: object) => {
-    //     console.log("222", info)
-    //     const { data } = await getRoleList(info)
-    //     formData.value = data
-    //   }
-    // }
-    return { formData, updateForm }
+    // 当前页码
+    const currPage = ref(1)
+    // 页码改变事件
+    const handleCurrentChange = (val: number) => {
+      currPage.value = val
+      // 改变后更新数据
+      updateForm.value({ offset: (currPage.value - 1) * 10 })
+    }
+    return {
+      formData,
+      updateForm,
+      utcToTime,
+      otherProps,
+      currPage,
+      handleCurrentChange
+    }
   },
   components: {
     AxTable
@@ -92,5 +123,8 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  > .title {
+    font-weight: bold;
+  }
 }
 </style>

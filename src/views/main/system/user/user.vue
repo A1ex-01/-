@@ -10,11 +10,20 @@
         <suspense
           ><content-show
             :contentFormConfig="contentFormConfig"
+            title="用户列表"
             pageName="user"
             ref="contentShowRef"
           >
-          </content-show
-        ></suspense>
+            <template #enable="slotScope"
+              ><el-button
+                :type="slotScope.data ? 'primary' : 'danger'"
+                size="small"
+                plain
+                >{{ slotScope.data ? "启用" : "禁用" }}</el-button
+              ></template
+            >
+          </content-show></suspense
+        >
       </div>
     </div>
   </div>

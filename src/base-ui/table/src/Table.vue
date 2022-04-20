@@ -17,7 +17,16 @@
         width="80"
       ></el-table-column>
       <template v-for="item in formItems" :key="item.id">
-        <template v-if="!item.slotName && item.prop">
+        <el-table-column v-bind="item" show-overflow-tooltip>
+          <template #default="scope">
+            <slot
+              :name="item.slotName"
+              :data="scope.row[item.prop]"
+              v-if="item.slotName"
+            ></slot>
+          </template>
+        </el-table-column>
+        <!-- <template v-if="!item.slotName && item.prop">
           <template v-if="item.prop !== 'createAt' && item.prop !== 'updateAt'">
             <el-table-column v-bind="item" />
           </template>
@@ -40,7 +49,7 @@
           <el-table-column v-bind="item">
             <slot :name="item.slotName"></slot>
           </el-table-column>
-        </template>
+        </template> -->
       </template>
     </el-table>
     <slot name="bottom"></slot>
@@ -50,7 +59,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
 import { ITableItem } from "../index"
-import { utcToTime } from "@/utils/formatTime"
 export default defineComponent({
   props: {
     formItems: {
@@ -71,7 +79,7 @@ export default defineComponent({
     }
   },
   setup() {
-    return { utcToTime }
+    return {}
   }
 })
 </script>
