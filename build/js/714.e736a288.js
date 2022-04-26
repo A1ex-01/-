@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkax_cms"]=self["webpackChunkax_cms"]||[]).push([[714],{6714:function(a,n,r){r.r(n),r.d(n,{default:function(){return f}});var s=r(6252);const e={class:"dashboard"},u=(0,s._)("h2",null,"dashboard",-1),t=[u];function c(a,n,r,u,c,d){return(0,s.wg)(),(0,s.iD)("div",e,t)}var d=(0,s.aZ)({name:"dashboard",setup(){return{}}}),o=r(3744);const h=(0,o.Z)(d,[["render",c]]);var f=h}}]);
-//# sourceMappingURL=714.e736a288.js.map
