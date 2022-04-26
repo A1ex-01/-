@@ -105,8 +105,15 @@
     </div>
   </div>
 </template>
-
-<script lang="ts"></script>
+<script lang="ts">
+import { defineComponent } from "vue"
+import AxCard from "@/base-ui/card/src/AxCard.vue"
+export default defineComponent({
+  components: {
+    AxCard
+  }
+})
+</script>
 
 <style scoped>
 .rely {
