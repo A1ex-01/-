@@ -20,7 +20,17 @@ const formItems: ITableItem[] = [
     prop: "enable",
     label: "状态",
     minWidth: 120,
-    slotName: "enable"
+    slotName: "enable",
+    options: [
+      {
+        key: "开启",
+        value: 1
+      },
+      {
+        key: "禁用",
+        value: 0
+      }
+    ]
   },
   {
     prop: "cellphone",

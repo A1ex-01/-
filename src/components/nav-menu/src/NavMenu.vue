@@ -56,7 +56,6 @@ export default defineComponent({
     // tab点击跳转
     const router = useRouter()
     const navClick = (url: any) => {
-      console.log(url)
       router.replace({ path: url })
     }
     // 监听路由跳转跟新defaultActive

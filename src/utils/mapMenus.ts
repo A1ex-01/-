@@ -47,3 +47,18 @@ export function pathMapMenu(
     }
   }
 }
+// 通过meau映射权限
+export function mapMenusToPermissions(userMenus: any[]) {
+  const permissions: string[] = []
+  const deepChildren = (userMenus: any) => {
+    for (const key in userMenus) {
+      if (userMenus[key].type === 3) {
+        permissions.push(userMenus[key].permission)
+      } else {
+        deepChildren(userMenus[key].children)
+      }
+    }
+  }
+  deepChildren(userMenus)
+  return permissions
+}

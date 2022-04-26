@@ -2,6 +2,11 @@ import { ITable, ITableItem } from "@/base-ui/table"
 
 const formItems: ITableItem[] = [
   {
+    prop: "id",
+    label: "id",
+    minWidth: 120
+  },
+  {
     prop: "name",
     label: "角色名",
     minWidth: 120

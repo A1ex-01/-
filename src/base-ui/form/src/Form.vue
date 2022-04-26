@@ -5,7 +5,11 @@
       <el-row>
         <template v-for="(item, index) in formItems" :key="index">
           <el-col v-bind="colLayout">
-            <el-form-item :label="item.label" :style="itemStyle">
+            <el-form-item
+              :label="item.label"
+              :style="itemStyle"
+              v-if="!item.isHiden"
+            >
               <template v-if="item.type === IInputType.INPUT">
                 <el-input v-model="formData[item.field]" />
               </template>
@@ -18,13 +22,16 @@
                   class="m-2"
                   :placeholder="item.placeHolder || 'Select'"
                   size="default"
+                  :key="index"
+                  style="width: 100%"
+                  @change="$forceUpdate()"
+                  :teleported="false"
                 >
                   <el-option
-                    v-for="item in item.options"
-                    :key="item.value"
-                    :label="item.key"
-                    :value="item.value"
-                    v-model="formData[item.field]"
+                    v-for="v in item.options"
+                    :key="v.value"
+                    :label="v.key"
+                    :value="v.value"
                   />
                 </el-select>
               </template>
@@ -84,15 +91,19 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const formData = ref({ ...props.modelValue })
+    const formData = ref({ ...JSON.parse(JSON.stringify(props.modelValue)) })
     watch(
       formData,
       (newValue) => {
+        console.log("props.formItems", props.formItems)
         emit("update:modelValue", newValue)
       },
-      { deep: true }
+      { deep: true, immediate: true }
     )
-    return { IInputType, formData }
+    const optionsChanged = () => {
+      console.log("option changed")
+    }
+    return { IInputType, formData, optionsChanged }
   }
 })
 </script>

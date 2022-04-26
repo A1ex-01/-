@@ -4,7 +4,9 @@
       <template #top>
         <div class="addUser">
           <span class="title" v-if="title">{{ title }}</span>
-          <el-button type="primary">新增用户</el-button>
+          <el-button type="primary" :disabled="!isCreate" @click="createInfoBtn"
+            >新增{{ title.slice(0, 2) }}</el-button
+          >
         </div>
       </template>
       <template #createAt="slotScope">
@@ -13,9 +15,44 @@
       <template #updateAt="slotScope">
         {{ utcToTime(slotScope.data) }}
       </template>
-      <template #edit>
-        <el-button type="text" size="small">编辑</el-button>
-        <el-button type="text" size="small">删除</el-button>
+      <template #edit="slotScope">
+        <el-button
+          type="text"
+          size="small"
+          :disabled="!isUpdate"
+          @click="editInfo(slotScope.data.row)"
+          >编辑</el-button
+        >
+        <el-popover
+          v-model:visible="visibles[slotScope.data.$index]"
+          placement="top"
+          :width="160"
+        >
+          <p>你确定要删除该信息吗?</p>
+          <div style="text-align: right; margin: 0">
+            <el-button
+              size="small"
+              type="text"
+              @click="visibles[slotScope.data.$index] = false"
+              >取消</el-button
+            >
+            <el-button
+              size="small"
+              type="primary"
+              @click="delInfo(slotScope.data.row, slotScope.data.$index)"
+              >确定</el-button
+            >
+          </div>
+          <template #reference>
+            <el-button
+              type="text"
+              size="small"
+              :disabled="!isDelete"
+              @click="visibles[slotScope.data.$index] = true"
+              >删除</el-button
+            >
+          </template>
+        </el-popover>
       </template>
       <template v-if="showBottom" #bottom
         ><div class="bottom">
@@ -45,7 +82,8 @@ import { defineComponent, ref } from "vue"
 import { AxTable } from "@/base-ui/table/index"
 import { useFormDataShow } from "@/hooks/useFormDataShow"
 import { utcToTime } from "@/utils/formatTime"
-// import { stringMapFn } from "@/utils/stringMapFn"
+import { usePermission } from "@/hooks/usePermision"
+import { ElMessage } from "element-plus"
 export default defineComponent({
   props: {
     contentFormConfig: {
@@ -63,9 +101,19 @@ export default defineComponent({
     showBottom: {
       type: Boolean,
       default: true
+    },
+    searchData: {
+      type: Object,
+      default: () => ({})
     }
   },
-  async setup(props) {
+  async setup(props, { emit }) {
+    // 获取权限
+    const isCreate = usePermission(props.pageName, "create")
+    const isDelete = usePermission(props.pageName, "delete")
+    const isUpdate = usePermission(props.pageName, "update")
+    const isQuery = usePermission(props.pageName, "query")
+
     // 搜集非默认的prop并生成插槽
     const otherProps = props.contentFormConfig?.formItems.filter(
       (item: any) => {
@@ -88,14 +136,40 @@ export default defineComponent({
       }
     )
     // 获取table数据
-    const [formData, updateForm] = await useFormDataShow(props.pageName)
+    const [formData, updateForm, deleteBtn] = await useFormDataShow(
+      props.pageName
+    )
     // 当前页码
     const currPage = ref(1)
     // 页码改变事件
     const handleCurrentChange = (val: number) => {
       currPage.value = val
+      // 拿到search的formdata
       // 改变后更新数据
-      updateForm.value({ offset: (currPage.value - 1) * 10 })
+      updateForm({
+        ...props.searchData,
+        offset: (currPage.value - 1) * 10
+      })
+    }
+    // 点击新建
+    const createInfoBtn = () => {
+      emit("createInfoBtn")
+    }
+    // 点击编辑
+    const editInfo = (val: any) => {
+      // console.log("editinfo:", val, formData)
+      emit("editInfo", val)
+    }
+    // 删除提示框状态组
+    const visibles = ref(Array(formData.value.list.length).fill(false))
+    const delInfo = async (val: any, index: number) => {
+      visibles.value[index] = false
+      await deleteBtn(val.id)
+      await updateForm()
+      ElMessage({
+        message: "删除成功",
+        type: "success"
+      })
     }
     return {
       formData,
@@ -103,7 +177,15 @@ export default defineComponent({
       utcToTime,
       otherProps,
       currPage,
-      handleCurrentChange
+      handleCurrentChange,
+      isCreate,
+      isDelete,
+      isUpdate,
+      isQuery,
+      editInfo,
+      delInfo,
+      visibles,
+      createInfoBtn
     }
   },
   components: {

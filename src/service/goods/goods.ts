@@ -9,3 +9,20 @@ export function getGoodList(data?: object) {
     }
   })
 }
+export function deleteGoodsInfo(id: number | string) {
+  return axRequest.delete({
+    url: "/goods/" + id
+  })
+}
+export function CreateGoodsInfo(data: any) {
+  return axRequest.patch({
+    url: "/goods/",
+    data
+  })
+}
+export function editGoodsInfo(data: any) {
+  return axRequest.patch({
+    url: "/goods/" + data.id,
+    data
+  })
+}

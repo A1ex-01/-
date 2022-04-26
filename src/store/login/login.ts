@@ -9,14 +9,20 @@ import {
 } from "@/service/login/login"
 import { IAccount } from "@/service/login/types"
 import router from "@/router"
-import { mapmenusToRoutes } from "@/utils/mapMenus"
+import { mapMenusToPermissions, mapmenusToRoutes } from "@/utils/mapMenus"
+import { getDepartListRequest, getRoleListRequest } from "@/service/role/role"
+import { getAllMenus } from "@/service/menu/menu"
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
     return {
       token: "",
       userInfo: {},
-      usermenus: []
+      usermenus: [],
+      permissions: [],
+      departList: [],
+      roleList: [],
+      allMenuList: []
     }
   },
   getters: {},
@@ -34,6 +40,18 @@ const loginModule: Module<ILoginState, IRootState> = {
       routemenu.forEach((route) => {
         router.addRoute("main", route)
       })
+      // 获取权限信息
+      const permissions = mapMenusToPermissions(usermenus)
+      state.permissions = permissions
+    },
+    changeDepartList(state, payload) {
+      state.departList = payload
+    },
+    changeRoleList(state, payload) {
+      state.roleList = payload
+    },
+    changeAllMenuList(state, payload) {
+      state.allMenuList = payload
     }
   },
   actions: {
@@ -67,6 +85,18 @@ const loginModule: Module<ILoginState, IRootState> = {
       if (usermenus) {
         commit("changeUsermenus", usermenus)
       }
+    },
+    async getDepartList({ commit }) {
+      const { data } = await getDepartListRequest()
+      commit("changeDepartList", data.list)
+    },
+    async getRoleList({ commit }) {
+      const { data } = await getRoleListRequest()
+      commit("changeRoleList", data.list)
+    },
+    async getAllMenuTree({ commit }) {
+      const { data } = await getAllMenus()
+      commit("changeAllMenuList", data.list)
     }
   }
 }

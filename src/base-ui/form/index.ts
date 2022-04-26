@@ -8,6 +8,7 @@ interface IFormItem {
   placeHolder?: any
   options?: any[]
   otherOptions?: object
+  isHiden?: boolean
 }
 interface IFormData {
   id: string

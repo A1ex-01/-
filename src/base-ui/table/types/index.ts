@@ -11,9 +11,11 @@ export interface ITableItem {
   label: string
   minWidth?: number
   slotName?: string
+  options?: any
 }
 export interface ITable {
   formItems: ITableItem[]
   showIndex: boolean
   showCheckBox: boolean
+  showTree?: boolean
 }

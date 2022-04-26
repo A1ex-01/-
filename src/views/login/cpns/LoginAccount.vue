@@ -76,13 +76,11 @@ export default defineComponent({
             message: "登录成功",
             type: "success"
           })
-          console.log("ac submit")
         } else {
           ElMessage({
             message: "请正确输入用户名或密码",
             type: "error"
           })
-          console.log("ac error submit!")
           return false
         }
       })
