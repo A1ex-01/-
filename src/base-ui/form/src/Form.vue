@@ -95,13 +95,12 @@ export default defineComponent({
     watch(
       formData,
       (newValue) => {
-        console.log("props.formItems", props.formItems)
         emit("update:modelValue", newValue)
       },
       { deep: true, immediate: true }
     )
     const optionsChanged = () => {
-      console.log("option changed")
+      ;("option changed")
     }
     return { IInputType, formData, optionsChanged }
   }

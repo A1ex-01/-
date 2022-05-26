@@ -25,7 +25,7 @@
         :defaultInfo="defaultInfo"
         @updateTableData="updateTableData"
         ref="maskContentRef"
-        pageName="users"
+        pageName="department"
         title="部门列表"
       ></content-mask>
     </div>
@@ -61,24 +61,28 @@ export default defineComponent({
       const passwordItem = maskConfig.value.formItems.find(
         (item) => item.field === "password"
       )
-      passwordItem!.isHiden = false
+      if (passwordItem) passwordItem!.isHiden = false
       if (!isGetedList.value) {
         // 获取下拉角色表数据
         const roleIdItem = maskConfig.value.formItems.find(
           (item) => item.field === "roleId"
         )
-        roleIdItem!.options = roleList.value.map((item: any) => ({
-          key: item.name,
-          value: item.id
-        }))
+        if (roleIdItem) {
+          roleIdItem!.options = roleList.value.map((item: any) => ({
+            key: item.name,
+            value: item.id
+          }))
+        }
         // 获取下拉部门表数据
         const departIdItem = maskConfig.value.formItems.find(
           (item) => item.field === "departmentId"
         )
-        departIdItem!.options = departList.value.map((item: any) => ({
-          key: item.name,
-          value: item.id
-        }))
+        if (departIdItem) {
+          departIdItem!.options = departList.value.map((item: any) => ({
+            key: item.name,
+            value: item.id
+          }))
+        }
         isGetedList.value = true
       }
     }

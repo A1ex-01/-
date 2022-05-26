@@ -135,16 +135,6 @@ export default defineComponent({
     const updateTableData = () => {
       contentShowRef.value.updateForm()
     }
-    // 点击状态按钮
-    // const changeStatus = async (val: any) => {
-    //   delete val.createAt
-    //   delete val.updateAt
-    //   await maskContentRef.value?.allMatch["users"].editDataInfo({
-    //     ...val,
-    //     enable: val.enable == 0 ? 0 : 1
-    //   })
-    //   updateTableData()
-    // }
     return {
       searchBtn,
       resetBtn,

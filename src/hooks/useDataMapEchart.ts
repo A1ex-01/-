@@ -50,7 +50,6 @@ export function useDataMapEchart(type: string, name: string, dataInfo: any) {
       delete item.address
       delete item.count
     })
-    console.log(dataInfo)
     const geoCoordMap: any = {
       北京: [116.41, 40.19],
       上海: [121.47, 31.24],
@@ -406,7 +405,6 @@ export function useDataMapEchart(type: string, name: string, dataInfo: any) {
     }
   }
   if (type === "line") {
-    console.log("1", dataInfo)
     const x = []
     const y = []
     for (const key of dataInfo) {
@@ -432,7 +430,6 @@ export function useDataMapEchart(type: string, name: string, dataInfo: any) {
     }
   }
   if (type === "bar") {
-    console.log("bar", dataInfo)
     const x = []
     const y = []
     for (const key of dataInfo) {

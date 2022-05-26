@@ -71,7 +71,7 @@ export default defineComponent({
             }
             LocalCache.setCache("userInfo", userInfo)
           }
-          console.log("phone submit!")
+          ;("phone submit!")
         } else {
           ElMessage({
             message: "请正确输入手机号或验证码",

@@ -17,7 +17,7 @@ export function usePageSearch() {
   // 点击重置
   const resetBtn = () => {
     // 获取axform实例并调用其中的reset方法
-    console.log("resed")
+    ;("resed")
   }
   return [contentShowRef, searchBtn, resetBtn, searchData]
 }

@@ -27,12 +27,12 @@ class AXRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
-        console.log("res success")
+        ;("res success")
         this.loading?.close()
         return res.data
       },
       (err) => {
-        console.log("res fail")
+        ;("res fail")
         this.loading?.close()
         return err
       }

@@ -66,7 +66,6 @@ export default defineComponent({
     // concat editCb
     const treeRef = ref<InstanceType<typeof ElTree>>()
     const editCallback = (item: any) => {
-      console.log("tiem", item.menuList)
       // 获取所有id
       const menus: any = []
       const deepGetId = (menuList: any) => {
@@ -79,13 +78,11 @@ export default defineComponent({
         }
       }
       deepGetId(item.menuList)
-      console.log("menus", menus)
       nextTick(() => {
         treeRef.value?.setCheckedKeys(menus, false)
       })
     }
     const handleCheckChange = (data1: any, data2: any) => {
-      console.log(data1, data1)
       const checkedKeys = data2.checkedKeys
       const halfCheckedKeys = data2.halfCheckedKeys
       const menuList = [...checkedKeys, ...halfCheckedKeys]

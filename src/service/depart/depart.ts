@@ -15,7 +15,7 @@ export function deleteDepartInfo(id: number | string) {
   })
 }
 export function CreateDepartInfo(data: any) {
-  return axRequest.patch({
+  return axRequest.post({
     url: "/department/",
     data
   })

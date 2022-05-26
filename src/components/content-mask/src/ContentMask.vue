@@ -26,6 +26,7 @@
 import { defineComponent, ref, watch } from "vue"
 import { allMatch } from "@/service/allMatchFn"
 import { AxForm } from "@/base-ui/form"
+import { ElMessage } from "element-plus"
 export default defineComponent({
   props: {
     maskFormConfig: {
@@ -77,13 +78,25 @@ export default defineComponent({
         const editInfo = { ...maskData.value, id: props.defaultInfo.id }
         if (props.otherInfo) editInfo.menuList = props.otherInfo.menuList
         delete editInfo.password
-        console.log(allMatch[props.pageName].createDataInfo)
-        await allMatch[props.pageName].editDataInfo(editInfo)
+        const res = await allMatch[props.pageName].editDataInfo(editInfo)
+        if (typeof res.data === "string") {
+          ElMessage({
+            message: res.data,
+            type: "warning"
+          })
+        }
         // 编辑后刷新数据
         emit("updateTableData")
       } else {
-        console.log(allMatch[props.pageName].createDataInfo)
-        allMatch[props.pageName].createDataInfo(maskData.value)
+        const res = await allMatch[props.pageName].createDataInfo(
+          maskData.value
+        )
+        if (typeof res.data === "string") {
+          ElMessage({
+            message: res.data,
+            type: "warning"
+          })
+        }
         // 新建后刷新数据
         emit("updateTableData")
       }
