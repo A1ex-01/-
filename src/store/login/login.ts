@@ -38,6 +38,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 加载动态路由表
       const routemenu = mapmenusToRoutes(usermenus)
       routemenu.forEach((route) => {
+        const crumb = route.path
+        route.meta = { crumb }
         router.addRoute("main", route)
       })
       // 获取权限信息

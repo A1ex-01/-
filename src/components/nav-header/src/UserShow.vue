@@ -24,8 +24,6 @@
           <el-dropdown-item @click="exit" :icon="CircleCloseFilled"
             >退出登录</el-dropdown-item
           >
-          <el-dropdown-item :icon="EditPen">用户信息</el-dropdown-item>
-          <el-dropdown-item :icon="Management">用户管理</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

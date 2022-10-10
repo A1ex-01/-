@@ -72,7 +72,7 @@ export default defineComponent({
   }
 }
 .el-header {
-  height: 50px;
+  height: 60px;
   background-color: white;
   line-height: 50px;
 }

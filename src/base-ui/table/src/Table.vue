@@ -4,7 +4,7 @@
     <el-table
       v-loading="formData ? false : true"
       :data="formData"
-      border
+      :border="true"
       style="width: 100%"
       :header-cell-style="{ 'text-align': 'center' }"
       :cell-style="{ 'text-align': 'center' }"
@@ -22,7 +22,7 @@
           <template #default="scope">
             <slot
               :name="item.slotName"
-              :data="item.slotName == 'edit' ? scope : scope.row[item.prop]"
+              :data="item.slotName == 'edit' ? scope : scope.row[item.prop!]"
               v-if="item.slotName"
             ></slot>
           </template>

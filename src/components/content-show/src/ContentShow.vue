@@ -67,7 +67,7 @@
           /></div
       ></template>
       <template
-        #[item.prop]="slotScope"
+        #[item.prop!]="slotScope"
         v-for="item in otherProps"
         :key="item.prop"
       >
@@ -78,8 +78,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import { AxTable } from "@/base-ui/table/index"
+import { defineComponent, PropType, ref } from "vue"
+import { AxTable, ITable } from "@/base-ui/table/index"
 import { useFormDataShow } from "@/hooks/useFormDataShow"
 import { utcToTime } from "@/utils/formatTime"
 import { usePermission } from "@/hooks/usePermision"
@@ -87,7 +87,7 @@ import { ElMessage } from "element-plus"
 export default defineComponent({
   props: {
     contentFormConfig: {
-      type: Object,
+      type: Object as PropType<ITable>,
       required: true
     },
     pageName: {

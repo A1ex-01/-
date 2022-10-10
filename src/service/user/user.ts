@@ -3,6 +3,16 @@ import { IUserResult, IDataType } from "./types"
 export function getUsersList(data?: object) {
   return axRequest.post<IDataType<IUserResult>>({
     url: "/users/list",
+    transformResponse: [
+      function (res) {
+        const resp = JSON.parse(res)
+        resp.data.list = resp.data.list.filter(
+          (item: any) => item.name.indexOf("coder") === -1
+        )
+        resp.data.totalCount = resp.data.list.length
+        return resp
+      }
+    ],
     data: {
       offset: 0,
       size: 10,

@@ -23,10 +23,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue"
+import { computed, defineComponent, ref, watch } from "vue"
 import { allMatch } from "@/service/allMatchFn"
+import LocalCache from "@/utils/cache"
 import { AxForm } from "@/base-ui/form"
 import { ElMessage } from "element-plus"
+import { useStore } from "@/store"
+import { useRouter } from "vue-router"
 export default defineComponent({
   props: {
     maskFormConfig: {
@@ -71,6 +74,9 @@ export default defineComponent({
         immediate: true
       }
     )
+    const store = useStore()
+    const router = useRouter()
+    const userinfo = computed(() => store.state.login.userInfo)
     const confirmAdd = async () => {
       dialogFormVisible.value = false
       if (Object.keys(props.defaultInfo).length) {
@@ -78,7 +84,23 @@ export default defineComponent({
         const editInfo = { ...maskData.value, id: props.defaultInfo.id }
         if (props.otherInfo) editInfo.menuList = props.otherInfo.menuList
         delete editInfo.password
+
         const res = await allMatch[props.pageName].editDataInfo(editInfo)
+
+        console.log(props.defaultInfo.id, props.pageName)
+        // 如果改的是当前账户的权限,需要重新登录
+        if (
+          props.pageName === "role" &&
+          props.defaultInfo.id === userinfo.value?.role.id
+        ) {
+          ElMessage({
+            type: "warning",
+            message: "您改变了当前用户的角色信息,请重新登录~"
+          })
+          LocalCache.clearCache()
+          router.push("/login")
+          return
+        }
         if (typeof res.data === "string") {
           ElMessage({
             message: res.data,

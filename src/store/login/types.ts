@@ -1,6 +1,6 @@
 export interface ILoginState {
   token: string
-  userInfo: object
+  userInfo: any
   usermenus: any
   permissions: string[]
   departList: any[]

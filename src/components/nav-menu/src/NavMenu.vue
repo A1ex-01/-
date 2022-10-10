@@ -1,7 +1,7 @@
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <img class="logo-img" src="../../../assets/img/logo.svg" alt="" />
+      <img class="logo-img" src="../../../assets/cms.svg" alt="" />
       <span class="title" v-if="!isCollapse">Vue3+TS</span>
     </div>
     <el-menu
@@ -56,7 +56,7 @@ export default defineComponent({
     // tab点击跳转
     const router = useRouter()
     const navClick = (url: any) => {
-      router.replace({ path: url })
+      router.push({ path: url })
     }
     // 监听路由跳转跟新defaultActive
     const route = useRoute()

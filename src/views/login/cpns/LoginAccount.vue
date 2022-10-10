@@ -32,7 +32,7 @@ import store from "@/store"
 export default defineComponent({
   setup() {
     let accountInfo = reactive({
-      acid: "coderwhy",
+      acid: "lilei",
       password: "123456"
     })
     // 输入规则

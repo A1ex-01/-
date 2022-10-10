@@ -35,9 +35,6 @@ module.exports = {
         views: "@/views"
       }
     },
-    devServer: {
-      historyApiFallback: true // 解决页面刷新找不到
-    },
     module: {
       rules: [
         {
