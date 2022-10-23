@@ -3,11 +3,11 @@
     <div class="about">
       <AxCard title="关于">
         <div>
-          Vue3Admin是基于Vue3、Vuex、VueRouter、ElementPlus、Typescript、Echarts5等的后台系统解决方案。
+          该网站基于Vue3、Vuex、VueRouter、ElementPlus、Typescript、Echarts5搭建。
         </div>
       </AxCard>
     </div>
-    <div class="rely">
+    <!-- <div class="rely">
       <AxCard title="目录结构">
         <div>
           <pre>
@@ -102,7 +102,7 @@
           >
         </div>
       </AxCard>
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">

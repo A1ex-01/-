@@ -76,6 +76,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-panel {
   margin-bottom: 150px;
+  padding: 50px 150px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px #fff;
+  background-color: white;
   .title {
     text-align: center;
   }

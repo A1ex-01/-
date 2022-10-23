@@ -24,7 +24,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("../../assets/img/login-bg.svg");
-  background-size: 75%;
+  background: url("http://a1ex.vip:8004/default-cover");
+  background-size: 100%;
 }
 </style>
