@@ -10,6 +10,22 @@
       <div class="message">
         <el-icon size="20px"><service /></el-icon>
       </div>
+      <div class="checkout">
+        <img :src="checkoutBtn" @click="sliderStatus = true" alt="" />
+        <Transition name="slider">
+          <div class="mask" v-if="sliderStatus">
+            <span
+              :class="{ checked: local === 'zhCn' }"
+              @click="changeLanguage('zhCn')"
+              >中文</span
+            ><span
+              :class="{ checked: local === 'en' }"
+              @click="changeLanguage('en')"
+              >英文</span
+            >
+          </div>
+        </Transition>
+      </div>
     </div>
     <el-dropdown>
       <span class="el-dropdown-link">
@@ -31,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue"
+import { computed, defineComponent, inject, ref, getCurrentInstance } from "vue"
 import LocalCache from "@/utils/cache"
 import {
   ArrowDown,
@@ -45,8 +61,11 @@ import {
 } from "@element-plus/icons-vue"
 import { useStore } from "vuex"
 import { useRouter } from "vue-router"
+import checkoutBtn from "@/assets/img/checkoutLanguage.svg"
 export default defineComponent({
   setup() {
+    const app = getCurrentInstance()
+    const sliderStatus = ref(false)
     // 获取用户头像和名字
     const store = useStore()
     const userInfo = computed(() => store.state.login.userInfo)
@@ -57,7 +76,38 @@ export default defineComponent({
       LocalCache.clearCache()
       router.push("/login")
     }
-    return { name, exit, CircleCloseFilled, EditPen, Management, UserFilled }
+    const getLanguage = () => {
+      const baseLocal = "zhCn"
+      const local = LocalCache.getCache("language")
+      if (local) {
+        return local === baseLocal ? baseLocal : "en"
+      } else {
+        localStorage.setItem("language", baseLocal)
+        return baseLocal
+      }
+    }
+    const local = ref(getLanguage())
+    const changeLanguageRoot: any = inject("changeLocale")
+    const changeLanguage = (locale: string) => {
+      LocalCache.setCache("language", locale)
+      changeLanguageRoot(locale)
+      local.value = locale
+      app!.appContext.config.globalProperties.$i18n.locale = locale
+      sliderStatus.value = false
+      // 更新语言
+    }
+    return {
+      name,
+      exit,
+      changeLanguage,
+      local,
+      CircleCloseFilled,
+      EditPen,
+      Management,
+      UserFilled,
+      checkoutBtn,
+      sliderStatus
+    }
   },
   components: {
     ArrowDown,
@@ -93,5 +143,56 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.checkout {
+  position: relative;
+  > img {
+    width: 50%;
+    height: 50%;
+  }
+  > .mask {
+    position: absolute;
+    left: 0%;
+    top: 65px;
+    width: 132px;
+    background-color: white;
+    z-index: 22;
+    transform: translateX(calc(-50% + 20px));
+    box-shadow: 0 0 10px 3px #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    > span {
+      display: block;
+      width: 100%;
+      line-height: 32px;
+      text-align: center;
+      color: #000;
+      &.checked {
+        background-color: #409eff;
+        color: white;
+      }
+    }
+  }
+}
+
+.slider-enter-active,
+.slider-leave-active {
+  transition: all 0.3s ease-in;
+}
+.slider-enter-from {
+  opacity: 0;
+  transform: translateX(calc(-50% + 20px)) translateY(30px) !important;
+}
+.slider-enter-to {
+  opacity: 1;
+  transform: translateX(calc(-50% + 20px)) translateY(0px) !important;
+}
+.slider-leave-from {
+  opacity: 1;
+  transform: translateX(calc(-50% + 20px)) translateY(0px) !important;
+}
+.slider-leave-to {
+  opacity: 0;
+  transform: translateX(calc(-50% + 20px)) translateY(30px) !important;
 }
 </style>

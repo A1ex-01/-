@@ -25,6 +25,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   background: url("http://a1ex.vip:8004/default-cover");
-  background-size: 100%;
+  background-size: cover;
 }
 </style>

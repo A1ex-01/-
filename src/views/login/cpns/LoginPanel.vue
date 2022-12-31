@@ -6,7 +6,7 @@
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><UserFilled /></el-icon>
-            <span>账号登录</span>
+            <span>{{ $t("账号登录") }}</span>
           </span>
         </template>
         <LoginAccount ref="accountRef" />
@@ -15,20 +15,20 @@
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><Iphone /></el-icon>
-            <span>手机登录</span>
+            <span>{{ $t("手机登录") }}</span>
           </span>
         </template>
         <LoginPhone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
     <div class="psw-check">
-      <el-checkbox v-model="pswStatus" label="记住密码" size="small" />
-      <span class="forgetpsw">忘记密码</span>
+      <el-checkbox v-model="pswStatus" :label="$t('记住密码')" size="small" />
+      <span class="forgetpsw">{{ $t("忘记密码") }}</span>
     </div>
     <div class="loginin">
-      <el-button type="primary" class="loginbtn" @click="submit"
-        >立即登录</el-button
-      >
+      <el-button type="primary" class="loginbtn" @click="submit">{{
+        $t("立即登录")
+      }}</el-button>
     </div>
   </div>
 </template>

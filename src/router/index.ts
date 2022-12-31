@@ -14,7 +14,10 @@ const routes: RouteRecordRaw[] = [
     name: "main",
     path: "/main",
     component: () => import("@/views/main/Main.vue"),
-    redirect: "/main/analysis/overview"
+    redirect: (to) => {
+      return "/main/analysis/overview"
+    },
+    children: []
   },
   {
     name: "notfound",

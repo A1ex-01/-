@@ -6,21 +6,23 @@
       :model="accountInfo"
       class="demo-ruleForm"
     >
-      <el-form-item label="手机号" prop="phone">
+      <el-form-item :label="$t('手机号')" prop="phone">
         <el-input
           v-model.number="accountInfo.phone"
           type="text"
           autocomplete="off"
         />
       </el-form-item>
-      <el-form-item label="验证码" prop="code">
+      <el-form-item :label="$t('验证码')" prop="code">
         <el-input
           v-model.number="accountInfo.code"
           maxlength="6"
           type="password"
           autocomplete="off"
         />
-        <el-button type="primary" class="get-code">获取验证码</el-button>
+        <el-button type="primary" class="get-code">{{
+          $t("获取验证码")
+        }}</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -19,12 +19,12 @@
             <el-icon>
               <component :is="item.icon.slice(8)" />
             </el-icon>
-            <span>{{ item.name }}</span>
+            <span>{{ $t(item.name) }}</span>
           </template>
           <template v-if="item.type === 1">
             <template v-for="v in item.children" :key="v.id">
               <el-menu-item :index="v.id + ''" @click="navClick(v.url)">{{
-                v.name
+                $t(v.name)
               }}</el-menu-item>
             </template>
           </template>

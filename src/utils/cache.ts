@@ -14,7 +14,11 @@ class LocalCache {
       value = window.sessionStorage.getItem(key)
     }
     if (value) {
-      return JSON.parse(value)
+      try {
+        return JSON.parse(value)
+      } catch (err) {
+        return value
+      }
     }
   }
   delCache(key: string, isLocalStroage = true) {

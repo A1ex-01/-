@@ -16,6 +16,7 @@ declare global {
   const ElCard: typeof import('element-plus/es')['ElCard']
   const ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
   const ElCol: typeof import('element-plus/es')['ElCol']
+  const ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
   const ElContainer: typeof import('element-plus/es')['ElContainer']
   const ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
   const ElDialog: typeof import('element-plus/es')['ElDialog']

@@ -3,8 +3,10 @@
     <AxForm v-bind="searchFormConfig" v-model="formData" ref="axForm">
       <template #bottom>
         <div class="bottom">
-          <el-button type="primary" @click="handleSearch">搜索</el-button>
-          <el-button @click="handleReset">重置</el-button>
+          <el-button type="primary" @click="handleSearch">{{
+            $t("搜索")
+          }}</el-button>
+          <el-button @click="handleReset">{{ $t("重置") }}</el-button>
         </div>
       </template>
     </AxForm>

@@ -2,7 +2,7 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./router"
 import store from "./store"
-
+import i18n from "./locale"
 // 重置样式
 import "normalize.css"
 import "@/assets/css/index.scss"
@@ -29,4 +29,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done()
 })
-createApp(App).use(store).use(router).mount("#app")
+// 与演化
+const app = createApp(App)
+app.use(store).use(i18n).use(router).mount("#app")

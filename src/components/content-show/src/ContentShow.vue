@@ -17,8 +17,9 @@
       </template>
       <template #edit="slotScope">
         <el-button
-          type="text"
+          type="primary"
           size="small"
+          link
           :disabled="!isUpdate"
           @click="editInfo(slotScope.data.row)"
           >编辑</el-button
@@ -32,7 +33,8 @@
           <div style="text-align: right; margin: 0">
             <el-button
               size="small"
-              type="text"
+              type="primary"
+              link
               @click="visibles[slotScope.data.$index] = false"
               >取消</el-button
             >
@@ -45,8 +47,9 @@
           </div>
           <template #reference>
             <el-button
-              type="text"
+              type="primary"
               size="small"
+              link
               :disabled="!isDelete"
               @click="visibles[slotScope.data.$index] = true"
               >删除</el-button

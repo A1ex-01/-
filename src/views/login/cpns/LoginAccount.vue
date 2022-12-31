@@ -6,14 +6,14 @@
       :model="accountInfo"
       class="demo-ruleForm"
     >
-      <el-form-item label="账号" prop="acid">
+      <el-form-item :label="$t('账号')" prop="acid">
         <el-input
           v-model.number="accountInfo.acid"
           type="text"
           autocomplete="off"
         />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('密码')" prop="password">
         <el-input
           v-model.number="accountInfo.password"
           type="password"
